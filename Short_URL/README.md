@@ -60,7 +60,7 @@ npm run dev
 ```sql
 CREATE TABLE links_URL (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  link_id VARCHAR(16) NOT NULL UNIQUE,
+  link_id VARCHAR(5) NOT NULL UNIQUE,
   short_code VARCHAR(32) NOT NULL UNIQUE,
   short_url TEXT NOT NULL,
   original_url TEXT NOT NULL,
@@ -73,8 +73,8 @@ CREATE TABLE links_URL (
 
 CREATE TABLE click_events (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  click_id VARCHAR(20) NOT NULL UNIQUE,
-  link_id VARCHAR(16) NOT NULL,
+  click_id VARCHAR(6) NOT NULL UNIQUE,
+  link_id VARCHAR(5) NOT NULL,
   clicked_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_click_events_link_id (link_id),
   CONSTRAINT fk_click_events_link
