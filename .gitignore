@@ -1,5 +1,6 @@
 /backend/data/*.sqlite
 /backend/data/*.sqlite-*
+/backend/config/database.local.php
 /.npm-cache/
 /.env
 /.env.*

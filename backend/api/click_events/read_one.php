@@ -10,4 +10,5 @@ $row = $event->readById($clickId)->fetch();
 if ($row === false) {
     sendJson(['message' => 'ไม่พบประวัติการคลิก'], 404);
 }
+requireOwnedLink($pdo, $row['link_id']);
 sendJson(['data' => $row]);

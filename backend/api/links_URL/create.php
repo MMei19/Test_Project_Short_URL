@@ -58,6 +58,7 @@ $link->original_url = $originalUrl;
 $link->short_code = $shortCode;
 
 $link->status = 'active';
+$link->owner_hash = browserOwnerHash();
 
 
 

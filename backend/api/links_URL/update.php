@@ -9,6 +9,7 @@ requireMethod('PUT');
 $data = readJson();
 
 $linkId = validateLinkId($data['link_id'] ?? null);
+requireOwnedLink($pdo, $linkId);
 
 $editableFields = ['original_url', 'status', 'expires_at'];
 

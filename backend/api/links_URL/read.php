@@ -9,6 +9,6 @@ requireMethod('GET');
 
 $link = new Links_URL($pdo, $redirectUrl);
 
-$rows = array_map([$link, 'withShortUrl'], $link->read()->fetchAll());
+$rows = array_map([$link, 'withShortUrl'], $link->readForOwner(browserOwnerHash())->fetchAll());
 
 sendJson(['data' => $rows]);

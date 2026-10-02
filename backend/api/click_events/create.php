@@ -7,6 +7,7 @@ require_once __DIR__ . '/../bootstrap.php';
 requireMethod('POST');
 $data = readJson();
 $linkId = validateLinkId($data['link_id'] ?? null);
+requireOwnedLink($pdo, $linkId);
 $pdo->beginTransaction();
 $link = lockLink($pdo, $linkId);
 if ($link === null) {

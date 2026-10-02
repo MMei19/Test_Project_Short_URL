@@ -8,6 +8,7 @@ require_once __DIR__ . '/../bootstrap.php';
 requireMethod('GET');
 
 $linkId = validateLinkId($_GET['link_id'] ?? null);
+requireOwnedLink($pdo, $linkId);
 
 $link = new Links_URL($pdo, $redirectUrl);
 

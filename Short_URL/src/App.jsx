@@ -239,7 +239,7 @@ function App() {
         <section className="summary-grid" id="stats" aria-label="สถิติลิงก์">
           <article className="summary-card teal-card">
             <div className="summary-icon"><FiLink2 /></div>
-            <div><p>ลิงก์ทั้งหมด</p><strong>{links.length}</strong><small>เฉพาะลิงก์ที่คุณสร้าง</small></div>
+            <div><p>ลิงก์ทั้งหมด</p><strong>{links.length}</strong></div>
           </article>
           <article className="summary-card blue-card">
             <div className="summary-icon"><FiBarChart2 /></div>
@@ -258,7 +258,6 @@ function App() {
         <section className="recent" id="recent">
           <div className="section-title">
             <div>
-              <small>ลิงก์ของฉัน</small>
               <h2>ลิงก์ที่สร้างล่าสุด</h2>
             </div>
               <div className="live-status"><i /> อัปเดตเรียลไทม์</div>

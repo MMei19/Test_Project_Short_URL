@@ -51,6 +51,11 @@ $newLinkId = array_key_exists('link_id', $data)
     ? validateLinkId($data['link_id'])
     : $oldLinkId;
 
+requireOwnedLink($pdo, $oldLinkId);
+if ($newLinkId !== $oldLinkId) {
+    requireOwnedLink($pdo, $newLinkId);
+}
+
 $pdo->beginTransaction();
 
 $linkIds = array_unique([$oldLinkId, $newLinkId]);

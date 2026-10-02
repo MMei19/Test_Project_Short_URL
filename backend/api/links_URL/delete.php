@@ -10,6 +10,7 @@ requireMethod('DELETE');
 $data = readJson();
 
 $linkId = validateLinkId($data['link_id'] ?? null);
+requireOwnedLink($pdo, $linkId);
 
 $pdo->beginTransaction();
 

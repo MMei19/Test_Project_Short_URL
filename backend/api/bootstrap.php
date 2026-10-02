@@ -30,8 +30,40 @@ function validateClickId($v): string
     return $v;}
 function baseUrl(): string
 {$scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';return $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost:8000') . '/';}
+function browserOwnerHash(): string
+{
+    $cookieName = 'short_url_browser';
+    $token = $_COOKIE[$cookieName] ?? null;
+    if (!is_string($token) || !preg_match('/^[a-f0-9]{64}$/', $token)) {
+        $token = bin2hex(random_bytes(32));
+        setcookie($cookieName, $token, [
+            'expires' => time() + 63072000,
+            'path' => '/',
+            'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+        $_COOKIE[$cookieName] = $token;
+    }
+    return hash('sha256', $token);
+}
+function requireLinkOwner(array $link): void
+{
+    $ownerHash = $link['owner_hash'] ?? null;
+    if (!is_string($ownerHash) || !hash_equals($ownerHash, browserOwnerHash())) {
+        sendJson(['message' => 'ไม่พบลิงก์'], 404);
+    }
+}
+function requireOwnedLink(PDO $pdo, string $linkId): void
+{
+    $stmt = $pdo->prepare('SELECT owner_hash FROM links_URL WHERE link_id = ?');
+    $stmt->execute([$linkId]);
+    $link = $stmt->fetch();
+    if ($link === false) sendJson(['message' => 'ไม่พบลิงก์'], 404);
+    requireLinkOwner($link);
+}
 function lockLink(PDO $pdo, string $id): ?array
-{$s = $pdo->prepare('SELECT link_id,short_code,short_url,original_url,clicks,status,expires_at,created_at,last_clicked_at FROM links_URL WHERE link_id=?');
+{$s = $pdo->prepare('SELECT link_id,short_code,short_url,original_url,clicks,status,expires_at,created_at,last_clicked_at,owner_hash FROM links_URL WHERE link_id=?');
     $s->execute([$id]);return $s->fetch() ?: null;}
 function syncClickStats(PDO $pdo, string $id): void
 {$s = $pdo->prepare('UPDATE links_URL SET clicks=(SELECT COUNT(*) FROM click_events WHERE link_id=?),last_clicked_at=(SELECT MAX(clicked_at) FROM click_events WHERE link_id=?) WHERE link_id=?');

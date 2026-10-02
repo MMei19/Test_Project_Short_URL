@@ -12,6 +12,7 @@ if ($initial === false) {
     sendJson(['message' => 'ไม่พบประวัติการคลิก'], 404);
 }
 $linkId = $initial['link_id'];
+requireOwnedLink($pdo, $linkId);
 $pdo->beginTransaction();
 
 if (lockLink($pdo, $linkId) === null) {
