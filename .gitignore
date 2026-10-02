@@ -1,0 +1,6 @@
+/backend/data/*.sqlite
+/backend/data/*.sqlite-*
+/.npm-cache/
+/.env
+/.env.*
+!/backend/data/.gitignore

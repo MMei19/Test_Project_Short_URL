@@ -1,0 +1,2 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap');
+:root{font-family:'Sarabun',Tahoma,sans-serif;color:#172e2b;background:#f7faf5;font-synthesis:none;text-rendering:optimizeLegibility}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px}button,input,select{font:inherit}button,a{transition:.2s ease}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b9e19e;outline-offset:2px}
